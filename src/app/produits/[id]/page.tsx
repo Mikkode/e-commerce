@@ -128,8 +128,9 @@ const RelatedProducts = ({ productIds }: { productIds?: number[] }) => {
   );
 };
 
-// Génération des métadonnées dynamiques
+// Correction de la fonction generateMetadata
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  // Pas besoin d'await sur params.id directement
   const id = parseInt(params.id);
   const product = getProductById(id);
   
@@ -144,18 +145,24 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     title: `${product.name} | Carrot Store`,
     description: product.description,
     openGraph: {
-      images: [product.images[0]]
-    }
+      images: [product.images[0]],
+    },
   };
 }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+// Rendre la fonction de page asynchrone également
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  // Pas besoin d'await sur params.id directement
   const id = parseInt(params.id);
   const product = getProductById(id);
   
   if (!product) {
     notFound();
   }
+  
+  // Récupérer la catégorie pour l'affichage
+  const categoryId = product.categoryId;
+  const categoryName = categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
   
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -170,8 +177,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             Produits
           </Link>
           <span className="mx-2 text-gray-400">/</span>
-          <Link href={`/produits/${product.category.toLowerCase()}`} className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-            {product.category}
+          <Link href={`/categories/${product.categoryId}`} className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+            {categoryName}
           </Link>
           <span className="mx-2 text-gray-400">/</span>
           <span className="text-gray-900 dark:text-white font-medium">{product.name}</span>

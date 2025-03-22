@@ -292,10 +292,10 @@ export default function Home() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Catégories</h3>
             <ul className="space-y-2">
-              <li><Link href="/produits/categories/legumes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Légumes</Link></li>
-              <li><Link href="/produits/categories/fruits" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Fruits</Link></li>
-              <li><Link href="/produits/categories/bio" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Produits Bio</Link></li>
-              <li><Link href="/produits/categories/nouveautes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Nouveautés</Link></li>
+              <li><Link href="/categories/legumes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Légumes</Link></li>
+              <li><Link href="/categories/fruits" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Fruits</Link></li>
+              <li><Link href="/categories/bio" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Produits Bio</Link></li>
+              <li><Link href="/categories/nouveautes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Nouveautés</Link></li>
             </ul>
           </div>
           

@@ -14,7 +14,7 @@ export default function ProductsLayout({
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-gray-900 dark:text-white">TechStore</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">Carrot Store</span>
             </Link>
             
             {/* Navigation */}
@@ -82,7 +82,7 @@ export default function ProductsLayout({
       <footer className="bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">TechStore</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Carrot Store</h3>
             <p className="text-gray-600 dark:text-gray-400">
               Votre destination pour la technologie de pointe et les gadgets innovants.
             </p>
@@ -113,7 +113,7 @@ export default function ProductsLayout({
             <address className="not-italic text-gray-600 dark:text-gray-400">
               <p>123 Avenue de la Tech</p>
               <p>75001 Paris, France</p>
-              <p className="mt-2">Email: contact@techstore.fr</p>
+              <p className="mt-2">Email: contact@carrotstore.fr</p>
               <p>Tél: +33 1 23 45 67 89</p>
             </address>
           </div>
@@ -121,7 +121,7 @@ export default function ProductsLayout({
         
         <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <p className="text-center text-gray-500 dark:text-gray-400">
-            © 2025 TechStore. Tous droits réservés.
+            © 2025 Carrot Store. Tous droits réservés.
           </p>
         </div>
       </footer>

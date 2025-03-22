@@ -76,17 +76,17 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   if (!category) {
     return {
       title: "Catégorie non trouvée | Carrot Store",
-      description: "La catégorie que vous recherchez n'existe pas."
+      description: "La catégorie que vous recherchez n'existe pas ou a été supprimée."
     };
   }
   
   return {
     title: `${category.name} | Carrot Store`,
-    description: `Découvrez notre sélection de ${category.name.toLowerCase()} frais, bio et locaux.`
+    description: `Découvrez notre sélection de produits dans la catégorie ${category.name}.`,
   };
 }
 
-export default function CategoryPage({ params }: { params: { id: string } }) {
+export default async function CategoryPage({ params }: { params: { id: string } }) {
   const categoryId = params.id;
   const category = categories.find(c => c.id === categoryId);
   
@@ -94,7 +94,7 @@ export default function CategoryPage({ params }: { params: { id: string } }) {
     notFound();
   }
   
-  const products = getProductsByCategory(categoryId);
+  const categoryProducts = getProductsByCategory(categoryId);
   
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -161,9 +161,9 @@ export default function CategoryPage({ params }: { params: { id: string } }) {
         
         {/* Liste des produits */}
         <section>
-          {products.length > 0 ? (
+          {categoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {products.map((product) => (
+              {categoryProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

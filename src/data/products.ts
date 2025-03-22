@@ -12,7 +12,7 @@ export interface Product {
   images: string[];
   colors?: string[];
   stock?: number;
-  category: string;
+  categoryId: string;
   isNew?: boolean;
   isBestseller?: boolean;
   relatedProducts?: number[];
@@ -66,7 +66,7 @@ export const products: Product[] = [
     ],
     colors: ["Orange", "Jaune", "Violet"],
     stock: 150,
-    category: "Légumes",
+    categoryId: "legumes",
     isNew: true,
     isBestseller: true,
     relatedProducts: [2, 3, 5]
@@ -102,7 +102,7 @@ export const products: Product[] = [
     ],
     colors: ["Rouge", "Jaune"],
     stock: 80,
-    category: "Fruits",
+    categoryId: "fruits",
     isNew: true,
     isBestseller: false,
     relatedProducts: [1, 3, 4]
@@ -138,7 +138,7 @@ export const products: Product[] = [
     ],
     colors: ["Mixte"],
     stock: 22,
-    category: "Légumes",
+    categoryId: "legumes",
     isNew: false,
     isBestseller: true,
     relatedProducts: [1, 4, 5]
@@ -174,7 +174,7 @@ export const products: Product[] = [
     ],
     colors: ["Orange"],
     stock: 45,
-    category: "Bio",
+    categoryId: "bio",
     isNew: false,
     isBestseller: false,
     relatedProducts: [1, 3, 6]
@@ -210,7 +210,7 @@ export const products: Product[] = [
     ],
     colors: ["Naturel"],
     stock: 120,
-    category: "Bio",
+    categoryId: "bio",
     isNew: false,
     isBestseller: false,
     relatedProducts: [1, 3, 6]
@@ -246,7 +246,7 @@ export const products: Product[] = [
     ],
     colors: ["Ambre"],
     stock: 35,
-    category: "Bio",
+    categoryId: "bio",
     isNew: true,
     isBestseller: false,
     relatedProducts: [4, 5, 3]
@@ -265,7 +265,7 @@ export function getRelatedProducts(productIds: number[]): Product[] {
 
 // Fonction pour obtenir les produits par catégorie
 export function getProductsByCategory(categoryId: string): Product[] {
-  return products.filter(product => product.category.toLowerCase() === categoryId.toLowerCase());
+  return products.filter(product => product.categoryId === categoryId);
 }
 
 // Fonction pour obtenir les produits nouveaux
