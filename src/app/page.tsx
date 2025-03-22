@@ -2,40 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 // import { motion } from "motion/react";
 import * as motion from "motion/react-client"
+import { getBestsellerProducts, getNewProducts } from "@/data/products";
+import RatingStars from "@/components/ui/RatingStars";
 
-// Données factices pour les produits
-const featuredProducts = [
-  {
-    id: 1,
-    name: "Casque Audio Premium",
-    description: "Son immersif avec réduction de bruit active",
-    price: 299.99,
-    rating: 4.8,
-    reviewCount: 124,
-    images: ["/products/headphones-1.jpg", "/products/headphones-2.jpg", "/products/headphones-3.jpg"],
-  },
-  {
-    id: 2,
-    name: "Montre Connectée Ultra",
-    description: "Suivi fitness avancé et notifications intelligentes",
-    price: 349.99,
-    rating: 4.7,
-    reviewCount: 89,
-    images: ["/products/smartwatch-1.jpg", "/products/smartwatch-2.jpg"],
-  },
-  {
-    id: 3,
-    name: "Enceinte Portable Aqua",
-    description: "Résistante à l'eau avec 24h d'autonomie",
-    price: 129.99,
-    rating: 4.5,
-    reviewCount: 56,
-    images: ["/products/speaker-1.jpg", "/products/speaker-2.jpg"],
-  },
-];
+// Récupération des produits à mettre en avant
+const featuredProducts = getBestsellerProducts().slice(0, 3);
 
 // Composant pour les étoiles de notation
-const RatingStars = ({ rating }: { rating: number }) => {
+const RatingStarsComponent = ({ rating }: { rating: number }) => {
   return (
     <div className="flex items-center">
       {[...Array(5)].map((_, i) => (
@@ -82,6 +56,20 @@ const ProductCard = ({ product }: { product: typeof featuredProducts[0] }) => {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        
+        {/* Badges */}
+        <div className="absolute top-2 left-2 flex flex-col gap-2">
+          {product.isNew && (
+            <span className="bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+              Nouveau
+            </span>
+          )}
+          {product.isBestseller && (
+            <span className="bg-amber-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+              Populaire
+            </span>
+          )}
+        </div>
       </div>
       
       <div className="flex flex-col p-4 flex-grow">
@@ -95,13 +83,13 @@ const ProductCard = ({ product }: { product: typeof featuredProducts[0] }) => {
         </div>
         <div className="mt-auto pt-4 flex items-center justify-between">
           <span className="text-xl font-bold text-gray-900 dark:text-white">
-            {product.price.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+            {product.price.toFixed(2)} €
           </span>
           <Link 
             href={`/produits/${product.id}`}
             className="rounded-full bg-black dark:bg-white text-white dark:text-black px-4 py-2 text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
           >
-            Voir détails
+            Voir le produit
           </Link>
         </div>
       </div>
@@ -115,8 +103,8 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-[80vh] overflow-hidden">
         <Image
-          src="/hero-image.jpg"
-          alt="Produits technologiques modernes"
+          src="https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=2000&auto=format&fit=crop"
+          alt="Produits frais et bio"
           fill
           className="object-cover"
           priority
@@ -129,7 +117,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl font-bold text-white mb-4"
           >
-            Technologie du Futur
+            Carrot Store
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -137,7 +125,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl text-white/90 max-w-2xl mb-8"
           >
-            Découvrez notre collection 2025 d'appareils innovants conçus pour transformer votre quotidien
+            Des produits frais, bio et locaux livrés directement chez vous
           </motion.p>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -146,56 +134,43 @@ export default function Home() {
           >
             <Link 
               href="/produits" 
-              className="rounded-full bg-white text-black px-8 py-3 text-lg font-medium hover:bg-gray-100 transition-colors"
+              className="rounded-full bg-white text-black px-8 py-3 font-medium hover:bg-gray-100 transition-colors"
             >
-              Explorer la collection
+              Découvrir nos produits
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
+      {/* Featured Products */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="mb-12 text-center">
-          <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold text-gray-900 dark:text-white"
-          >
-            Produits Populaires
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
-          >
-            Nos produits les plus appréciés, sélectionnés pour leur qualité exceptionnelle et leur design innovant
-          </motion.p>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Nos produits populaires</h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Découvrez notre sélection de produits frais et bio les plus appréciés par nos clients
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-
-        <div className="mt-16 text-center">
+        
+        <div className="mt-12 text-center">
           <Link 
             href="/produits" 
-            className="inline-flex items-center rounded-full border border-gray-300 dark:border-gray-700 px-8 py-3 text-base font-medium text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="inline-flex items-center rounded-full border border-gray-300 dark:border-gray-700 px-6 py-3 text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             Voir tous les produits
-            <svg className="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+            <svg className="ml-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Why Choose Us */}
       <section className="py-16 bg-gray-100 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -217,13 +192,13 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm"
             >
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-green-600 dark:text-green-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Qualité Premium</h3>
-              <p className="text-gray-600 dark:text-gray-400">Tous nos produits sont soigneusement sélectionnés pour leur durabilité et leurs performances exceptionnelles.</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Produits 100% Bio</h3>
+              <p className="text-gray-600 dark:text-gray-400">Tous nos produits sont issus de l'agriculture biologique, sans pesticides ni engrais chimiques.</p>
             </motion.div>
 
             <motion.div 
@@ -233,8 +208,8 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm"
             >
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-green-600 dark:text-green-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600 dark:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -249,13 +224,13 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm"
             >
-              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-purple-600 dark:text-purple-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-amber-600 dark:text-amber-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Garantie 2 Ans</h3>
-              <p className="text-gray-600 dark:text-gray-400">Tous nos produits sont garantis pendant 2 ans avec un service après-vente réactif et efficace.</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Prix Équitables</h3>
+              <p className="text-gray-600 dark:text-gray-400">Nous garantissons une rémunération juste pour nos producteurs tout en vous proposant des prix accessibles.</p>
             </motion.div>
           </div>
         </div>
@@ -274,16 +249,16 @@ export default function Home() {
                 <input
                   type="email"
                   placeholder="Votre adresse email"
-                  className="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                   S'inscrire
                 </button>
               </div>
             </div>
             <div className="md:w-1/3">
               <Image
-                src="/newsletter-image.jpg"
+                src="https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=800&auto=format&fit=crop"
                 alt="Restez informé des dernières tendances"
                 width={400}
                 height={300}
@@ -298,9 +273,9 @@ export default function Home() {
       <footer className="bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">TechStore</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Carrot Store</h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Votre destination pour la technologie de pointe et les gadgets innovants.
+              Votre destination pour des produits frais, bio et locaux livrés directement chez vous.
             </p>
           </div>
           
@@ -317,19 +292,19 @@ export default function Home() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Catégories</h3>
             <ul className="space-y-2">
-              <li><Link href="/produits/audio" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Audio</Link></li>
-              <li><Link href="/produits/montres" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Montres Connectées</Link></li>
-              <li><Link href="/produits/accessoires" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Accessoires</Link></li>
-              <li><Link href="/produits/nouveautes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Nouveautés</Link></li>
+              <li><Link href="/produits/categories/legumes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Légumes</Link></li>
+              <li><Link href="/produits/categories/fruits" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Fruits</Link></li>
+              <li><Link href="/produits/categories/bio" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Produits Bio</Link></li>
+              <li><Link href="/produits/categories/nouveautes" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Nouveautés</Link></li>
             </ul>
           </div>
           
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contact</h3>
             <address className="not-italic text-gray-600 dark:text-gray-400">
-              <p>123 Avenue de la Tech</p>
+              <p>123 Avenue des Carottes</p>
               <p>75001 Paris, France</p>
-              <p className="mt-2">Email: contact@techstore.fr</p>
+              <p className="mt-2">Email: contact@carrotstore.fr</p>
               <p>Tél: +33 1 23 45 67 89</p>
             </address>
           </div>
@@ -337,7 +312,7 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <p className="text-center text-gray-500 dark:text-gray-400">
-            © 2025 TechStore. Tous droits réservés.
+            © 2025 Carrot Store. Tous droits réservés.
           </p>
         </div>
       </footer>
