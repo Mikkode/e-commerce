@@ -41,6 +41,7 @@ const CategoryCard = ({ category }: { category: typeof categories[0] }) => {
 export default function CategoriesPage() {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* En-tête */}
         <div className="text-center mb-12">
