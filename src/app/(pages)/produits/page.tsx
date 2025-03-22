@@ -46,7 +46,7 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
         </div>
         
         {/* Quick actions */}
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="aPbsolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button className="w-8 h-8 rounded-full bg-white dark:bg-gray-900 shadow-md flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
             <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
