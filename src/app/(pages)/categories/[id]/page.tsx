@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
-import { Metadata } from "next";
 import { categories, getProductsByCategory } from "@/data/products";
 import RatingStars from "@/components/ui/RatingStars";
 import { notFound } from "next/navigation";
@@ -69,9 +68,9 @@ const ProductCard = ({ product }: { product: ReturnType<typeof getProductsByCate
 };
 
 // Génération des métadonnées dynamiques
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const categoryId = params.id;
-  const category = categories.find(c => c.id === categoryId);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const {id} = await params;
+  const category = categories.find(c => c.id === id);
   
   if (!category) {
     return {
@@ -86,15 +85,15 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default async function CategoryPage({ params }: { params: { id: string } }) {
-  const categoryId = params.id;
-  const category = categories.find(c => c.id === categoryId);
+export default async function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const {id} = await params;
+  const category = categories.find(c => c.id === id);
   
   if (!category) {
     notFound();
   }
   
-  const categoryProducts = getProductsByCategory(categoryId);
+  const categoryProducts = getProductsByCategory(id);
   
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -110,7 +109,7 @@ export default async function CategoryPage({ params }: { params: { id: string } 
               Produits
             </Link>
             <span className="mx-2 text-gray-400">/</span>
-            <Link href="/produits/categories" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+            <Link href="/categories" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
               Catégories
             </Link>
             <span className="mx-2 text-gray-400">/</span>
@@ -171,7 +170,7 @@ export default async function CategoryPage({ params }: { params: { id: string } 
             <div className="text-center py-12">
               <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-2">Aucun produit trouvé</h2>
               <p className="text-gray-600 dark:text-gray-400">
-                Nous n'avons pas de produits dans cette catégorie pour le moment.
+                Nous n&apos;avons pas de produits dans cette catégorie pour le moment.
               </p>
               <Link 
                 href="/produits" 

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as motion from "motion/react-client";
-import { Metadata } from "next";
 import { getProductById, getRelatedProducts } from "@/data/products";
 import ProductCarousel from "@/components/product/ProductCarousel";
 import RatingStars from "@/components/ui/RatingStars";
@@ -73,7 +72,7 @@ const ReviewSection = ({ rating, reviewCount }: { rating: number; reviewCount: n
             </div>
           </div>
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Parfait ! Je suis cliente régulière et je n'ai jamais été déçue. La qualité est toujours au rendez-vous.
+            Parfait ! Je suis cliente régulière et je n&apos;ai jamais été déçue. La qualité est toujours au rendez-vous.
           </p>
         </div>
       </div>
@@ -129,10 +128,10 @@ const RelatedProducts = ({ productIds }: { productIds?: number[] }) => {
 };
 
 // Correction de la fonction generateMetadata
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   // Pas besoin d'await sur params.id directement
-  const id = parseInt(params.id);
-  const product = getProductById(id);
+  const {id} = await params;
+  const product = getProductById(parseInt(id));
   
   if (!product) {
     return {
@@ -151,10 +150,10 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 // Rendre la fonction de page asynchrone également
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   // Pas besoin d'await sur params.id directement
-  const id = parseInt(params.id);
-  const product = getProductById(id);
+  const {id} = await params;
+  const product = getProductById(parseInt(id));
   
   if (!product) {
     notFound();

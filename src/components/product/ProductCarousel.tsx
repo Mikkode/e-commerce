@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "motion/react";

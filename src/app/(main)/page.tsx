@@ -2,39 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 // import { motion } from "motion/react";
 import * as motion from "motion/react-client"
-import { getBestsellerProducts, getNewProducts } from "@/data/products";
+import { getBestsellerProducts } from "@/data/products";
 import RatingStars from "@/components/ui/RatingStars";
 
 // Récupération des produits à mettre en avant
 const featuredProducts = getBestsellerProducts().slice(0, 3);
 
-// Composant pour les étoiles de notation
-const RatingStarsComponent = ({ rating }: { rating: number }) => {
-  return (
-    <div className="flex items-center">
-      {[...Array(5)].map((_, i) => (
-        <svg
-          key={i}
-          className={`w-4 h-4 ${
-            i < Math.floor(rating) ? "text-amber-400" : "text-gray-300"
-          } ${i === Math.floor(rating) && rating % 1 > 0 ? "text-amber-400" : ""}`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-            clipRule="evenodd"
-          />
-        </svg>
-      ))}
-      <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-        ({rating})
-      </span>
-    </div>
-  );
-};
+
 
 // Composant pour la carte de produit
 const ProductCard = ({ product }: { product: typeof featuredProducts[0] }) => {
@@ -198,7 +172,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Produits 100% Bio</h3>
-              <p className="text-gray-600 dark:text-gray-400">Tous nos produits sont issus de l'agriculture biologique, sans pesticides ni engrais chimiques.</p>
+              <p className="text-gray-600 dark:text-gray-400">Tous nos produits sont issus de l&apos;agriculture biologique, sans pesticides ni engrais chimiques.</p>
             </motion.div>
 
             <motion.div 
@@ -252,7 +226,7 @@ export default function Home() {
                   className="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                  S'inscrire
+                  S&apos;inscrire
                 </button>
               </div>
             </div>

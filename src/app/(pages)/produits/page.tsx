@@ -86,7 +86,7 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
 const CategoryCard = ({ category }: { category: typeof categories[0] }) => {
   return (
     <Link 
-      href={`/produits/categories/${category.id}`}
+      href={`/categories/${category.id}`}
       className="group relative overflow-hidden rounded-xl shadow-sm"
     >
       <div className="relative h-40 overflow-hidden">

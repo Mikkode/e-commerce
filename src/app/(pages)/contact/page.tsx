@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
+
 import * as motion from "motion/react-client";
 import { Metadata } from "next";
 import { contactData } from "@/data/contact";
@@ -104,7 +103,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Horaires d'ouverture</h3>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Horaires d&apos;ouverture</h3>
                   <ul className="mt-2 space-y-1 text-gray-600 dark:text-gray-400">
                     {contactData.contact.hours.map((hour, index) => (
                       <li key={index}>{hour}</li>
